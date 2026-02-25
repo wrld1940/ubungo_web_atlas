@@ -3675,6 +3675,9 @@ p, li, a, span, div {
     gap:10px;
     color: rgba(232,242,255,0.86);
     font-size: 12px;
+      max-height: min(70vh, 520px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .atlas-settings label{
     display:flex;
@@ -3736,6 +3739,184 @@ p, li, a, span, div {
     font-weight:800;
   }
   .atlas-settings .search-row button:hover{ filter: brightness(1.06); }
+
+
+
+      /* ================= Optional UI visibility defaults ================= */
+  /* Floating Contact button stays hidden (Contact is inside About Us modal) */
+  #contactBtn{ display:none !important; }
+
+  /* North arrow removed */
+  img[src*="North_arrow.svg"]{ display:none !important; }
+
+  /* ===== Atlas Map Search panel (toggle in Atlas settings) ===== */
+  #mapSearchPanel{
+    position:absolute;
+    top:12px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(420px, calc(100% - 28px));
+    z-index:2500;
+    pointer-events:auto;
+    display:none;
+  }
+  #mapSearchPanel .row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  #mapSearchPanel input{
+    flex:1;
+    padding:10px 12px;
+    border-radius: 12px;
+    border:1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: rgba(232,242,255,0.95);
+    outline:none;
+  }
+  #mapSearchPanel button{
+    padding:10px 12px;
+    border-radius: 12px;
+    border:1px solid rgba(255,255,255,0.18);
+    background: rgba(52,152,219,0.72);
+    color:#fff;
+    font-weight: 900;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  #mapSearchPanel .hint{
+    margin-top:8px;
+    font-size: 12px;
+    color: rgba(232,242,255,0.70);
+  }
+
+  /* ===== Metadata modal (layer-aware) ===== */
+#layerMetaModal{
+  display:none;
+  position: fixed;
+  inset:0;
+  background: rgba(0,0,0,0.55);
+  z-index: 10050;
+  align-items:center;
+  justify-content:center;
+  padding: 14px;
+}
+#layerMetaCard{
+  display:inline-block;                 /* shrink-wrap */
+  width: fit-content;                   /* size to content */
+  max-width: min(600px, calc(100vw - 28px));
+  min-width: min(360px, calc(100vw - 28px));
+  background: rgba(10, 20, 28, 0.92);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 18px;
+  box-shadow: 0 18px 55px rgba(0,0,0,0.55);
+  backdrop-filter: blur(10px);
+}
+#layerMetaCard .head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+#layerMetaCard .head b{
+  color: rgba(232,242,255,0.96);
+  font-size: 14px;
+  letter-spacing: .2px;
+}
+#layerMetaClose{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(232,242,255,0.92);
+  cursor: pointer;
+  font-weight: 900;
+}
+#layerMetaClose:hover{ filter: brightness(1.08); }
+
+#layerMetaCard .body{
+  padding: 12px 14px 14px 14px;
+  max-height: min(70vh, calc(100vh - 180px));
+  overflow:auto;                        /* scroll only if too tall */
+}
+
+/* neat key/value layout that adapts to content width */
+.meta-grid{
+  display:grid;
+  grid-template-columns: max-content minmax(180px, 1fr);
+  gap: 10px 14px;
+  align-items:start;
+}
+.meta-k{
+  color: rgba(232,242,255,0.78);
+  font-size: 12.5px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.meta-v{
+  color: rgba(232,242,255,0.92);
+  font-size: 12.5px;
+  line-height: 1.45;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+
+
+  /* ===== Settings panel vertical scroll ===== */
+  .atlas-settings{
+    max-height: 82vh;
+  }
+  .atlas-settings .body{
+    max-height: calc(82vh - 52px);
+    overflow-y: auto;
+    padding-right: 6px; /* keep scrollbar off text */
+  }
+
+  /* ===== Sidebar collapse / expand (hamburger) ===== */
+  .sidebar-collapse-btn{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    margin-bottom: 10px;
+  }
+  .sidebar-collapse-btn .bars{
+    width: 18px;
+    height: 12px;
+    position: relative;
+  }
+  .sidebar-collapse-btn .bars::before,
+  .sidebar-collapse-btn .bars::after,
+  .sidebar-collapse-btn .bars span{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    height:2px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.85);
+  }
+  .sidebar-collapse-btn .bars::before{ top:0; }
+  .sidebar-collapse-btn .bars span{ top:5px; }
+  .sidebar-collapse-btn .bars::after{ bottom:0; }
+
+  .sidebar.collapsed{
+    width: 62px !important;
+    padding: 10px 8px !important;
+    overflow: hidden !important;
+  }
+  .sidebar.collapsed > :not(.sidebar-collapse-btn){
+    display: none !important;
+  }
 
 
   /* ================= PATCH: FULL-WIDTH MAP + OFFCANVAS SIDEBAR DRAWER ================= */
